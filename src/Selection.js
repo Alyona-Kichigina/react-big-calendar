@@ -35,6 +35,10 @@ function getEventCoordinates(e) {
     target = e.touches[0]
   }
 
+  if (e.targetTouches && e.targetTouches.length) {
+    target = e.targetTouches[0]
+  }
+
   return {
     clientX: target.clientX,
     clientY: target.clientY,
@@ -80,10 +84,18 @@ class Selection {
       'drop',
       this._dropFromOutsideListener
     )
+    this._removeDropFromOutsideListener = addEventListener(
+      'touchmove',
+      this._dropFromOutsideListener
+    )
     this._removeDragOverFromOutsideListener = addEventListener(
       'dragover',
       this._dragOverFromOutsideListener
     )
+    // this._removeDragOverFromOutsideListener = addEventListener(
+    //   'touchmove',
+    //   this._dragOverFromOutsideListener
+    // )
     this._addInitialEventListener()
   }
 
